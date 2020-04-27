@@ -1,0 +1,444 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "backend-api",
+    "version": "1.0",
+    "description": "Rest api for rides"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8010"
+    }
+  ],
+  "paths": {
+    "/rides": {
+      "get": {
+        "summary": "get rides",
+        "tags": [
+          "rides"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ride-reponse"
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": [
+                      {
+                        "ride_id": 1,
+                        "start_lat": -80,
+                        "start_long": 70,
+                        "end_lat": 80,
+                        "end_long": 60,
+                        "rider_name": "john",
+                        "driver_name": "ron",
+                        "driver_vehicle": "car",
+                        "created": "2020-04-26 10:31:35"
+                      },
+                      {
+                        "ride_id": 2,
+                        "start_lat": 90,
+                        "start_long": 70,
+                        "end_lat": 80,
+                        "end_long": 60,
+                        "rider_name": "john",
+                        "driver_name": "ron",
+                        "driver_vehicle": "car",
+                        "created": "2020-04-26 10:31:43"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "validation error": {
+                    "value": {
+                      "error_code": "RIDES_NOT_FOUND_ERROR",
+                      "message": "Could not find any rides"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Server error": {
+                    "value": {
+                      "error_code": "SERVER_ERROR",
+                      "message": "Unknown error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-rides",
+        "description": "get all rides"
+      },
+      "post": {
+        "summary": "create ride",
+        "tags": [
+          "rides"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ride-reponse"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "ride_id": 1,
+                      "start_lat": -80,
+                      "start_long": 70,
+                      "end_lat": 80,
+                      "end_long": 60,
+                      "rider_name": "john",
+                      "driver_name": "ron",
+                      "driver_vehicle": "car",
+                      "created": "2020-04-26 10:31:35"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "validation failed": {
+                    "value": {
+                      "error_code": "VALIDATION_ERROR",
+                      "message": "Start latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "server error": {
+                    "value": {
+                      "error_code": "SERVER_ERROR",
+                      "message": "Unknown error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-rides",
+        "description": "create new ride",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ride-request"
+              },
+              "examples": {
+                "valid request": {
+                  "value": {
+                    "start_lat": -80,
+                    "start_long": 70,
+                    "end_lat": 80,
+                    "end_long": 60,
+                    "rider_name": "john",
+                    "driver_name": "ron",
+                    "driver_vehicle": "car"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/ride/{id}": {
+      "get": {
+        "summary": "get ride by id",
+        "tags": [
+          "rides"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ride-reponse"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "ride_id": 1,
+                      "start_lat": -80,
+                      "start_long": 70,
+                      "end_lat": 80,
+                      "end_long": 60,
+                      "rider_name": "john",
+                      "driver_name": "ron",
+                      "driver_vehicle": "car",
+                      "created": "2020-04-26 10:31:35"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "not found": {
+                    "value": {
+                      "error_code": "RIDES_NOT_FOUND_ERROR",
+                      "message": "Could not find any rides"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "server error": {
+                    "value": {
+                      "error_code": "SERVER_ERROR",
+                      "message": "Unknown error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-rides-byId"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ride id"
+        }
+      ]
+    },
+    "/health": {
+      "get": {
+        "summary": "health check url",
+        "tags": [
+          "health check"
+        ],
+        "operationId": "get-health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ride-reponse": {
+        "title": "ride-response",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "ride_id": 1,
+            "start_lat": -80,
+            "start_long": 70,
+            "end_lat": 80,
+            "end_long": 60,
+            "rider_name": "john",
+            "driver_name": "ron",
+            "driver_vehicle": "car",
+            "created": "2020-04-26 09:17:40"
+          }
+        },
+        "description": "Ride response details",
+        "properties": {
+          "start_lat": {
+            "type": "number"
+          },
+          "start_long": {
+            "type": "number"
+          },
+          "end_lat": {
+            "type": "number"
+          },
+          "end_long": {
+            "type": "number"
+          },
+          "rider_name": {
+            "type": "string"
+          },
+          "driver_name": {
+            "type": "string"
+          },
+          "driver_vehicle": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ride_id": {
+            "type": "number"
+          }
+        }
+      },
+      "ride-request": {
+        "title": "ride-request",
+        "type": "object",
+        "x-tags": [
+          "request-body"
+        ],
+        "properties": {
+          "start_lat": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "latitude of start "
+          },
+          "start_long": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "longitude of start"
+          },
+          "end_lat": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "latitute of destination"
+          },
+          "end_long": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "longitude of destination"
+          },
+          "rider_name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "rider name"
+          },
+          "driver_name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "driver name"
+          },
+          "driver_vehicle": {
+            "type": "string",
+            "minLength": 1,
+            "description": ""
+          }
+        },
+        "required": [
+          "start_lat",
+          "start_long",
+          "end_lat",
+          "end_long",
+          "rider_name",
+          "driver_name",
+          "driver_vehicle"
+        ],
+        "x-examples": {
+          "request model": {
+            "start_lat": -80,
+            "start_long": 70,
+            "end_lat": 80,
+            "end_long": 60,
+            "driver_name": "ron",
+            "driver_vehicle": "car"
+          }
+        },
+        "description": "Request model"
+      },
+      "error": {
+        "title": "error",
+        "type": "object",
+        "x-tags": [
+          "response"
+        ],
+        "x-examples": {
+          "response": {
+            "error_code": "RIDES_NOT_FOUND_ERROR",
+            "message": "Could not find any rides"
+          }
+        },
+        "properties": {
+          "error_code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
