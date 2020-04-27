@@ -4,7 +4,7 @@ module.exports = (db) => {
     const createRideTableSchema = `
         CREATE TABLE Rides
         (
-        rideID INTEGER PRIMARY KEY AUTOINCREMENT,
+        rideId INTEGER PRIMARY KEY AUTOINCREMENT,
         startLat DECIMAL NOT NULL,
         startLong DECIMAL NOT NULL,
         endLat DECIMAL NOT NULL,
