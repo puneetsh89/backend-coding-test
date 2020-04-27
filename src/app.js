@@ -1,10 +1,14 @@
 'use strict';
-var snakeCaseKeys = require('snakecase-keys')
+const snakeCaseKeys = require('snakecase-keys')
+const swaggerRouter = require('./routes/swagger-route');
+
 const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+
+app.use(swaggerRouter);
 
 module.exports = (db) => {
     app.get('/health', (req, res) => res.send('Healthy'));
