@@ -42,8 +42,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "",
-      "pre-commit": ""
+      "pre-push": "npm run linter",
+      "pre-commit": "npm run linter"
     }
   }
 }
