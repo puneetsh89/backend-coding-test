@@ -1,13 +1,11 @@
 const snakeCaseKeys = require('snakecase-keys');
-const swaggerRouter = require('./routes/swagger-route');
-const logger = require('./utilities/logger');
 const morgan = require('morgan');
 const express = require('express');
+const bodyParser = require('body-parser');
+const swaggerRouter = require('./routes/swagger-route');
+const logger = require('./utilities/logger');
 
 const app = express();
-
-const bodyParser = require('body-parser');
-
 const jsonParser = bodyParser.json();
 
 app.use(swaggerRouter);
@@ -82,7 +80,7 @@ module.exports = (db) => {
       req.body.driver_vehicle,
     ];
 
-    const result = db.run(
+    db.run(
       'INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)',
       values,
       function (err) {
@@ -94,10 +92,10 @@ module.exports = (db) => {
         }
 
         db.all('SELECT * FROM Rides WHERE rideId = ?', this.lastID, function (
-          err,
+          error,
           rows,
         ) {
-          if (err) {
+          if (error) {
             return res.status(500).send({
               error_code: 'SERVER_ERROR',
               message: 'Unknown error',
