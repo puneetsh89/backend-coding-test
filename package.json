@@ -12,7 +12,7 @@
     "start": "node index.js",
     "linter": "eslint .",
     "linter-fix": "eslint --fix .",
-    "coverage": "nyc --check-coverage --branches=80 --lines=80 --functions=80 --statements=80 --reporter=html mocha tests",
+    "coverage": "nyc --check-coverage --branches=80 --lines=80 --functions=80 --statements=80 --reporter=html npm run test",
     "coverage-dev": "nyc --check-coverage --branches=80 --lines=80 --functions=80 --statements=80 --reporter=html mocha tests"
   },
   "keywords": [
@@ -46,8 +46,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run linter",
-      "pre-commit": "npm run linter"
+      "pre-push": "npm run test",
+      "pre-commit": "npm run coverage"
     }
   }
 }
