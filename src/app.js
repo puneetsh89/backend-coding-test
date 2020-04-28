@@ -1,6 +1,7 @@
 const snakeCaseKeys = require('snakecase-keys');
 const swaggerRouter = require('./routes/swagger-route');
-
+const logger = require('./utilities/logger');
+const morgan = require('morgan');
 const express = require('express');
 
 const app = express();
@@ -10,6 +11,7 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 app.use(swaggerRouter);
+app.use(morgan('combined', { stream: logger.stream }));
 
 module.exports = (db) => {
   app.get('/health', (req, res) => res.send('Healthy'));
