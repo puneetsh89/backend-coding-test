@@ -1,26 +1,13 @@
 const request = require('supertest');
-const sqlite3 = require('sqlite3').verbose();
 const chai = require('chai');
 const chaiExclude = require('chai-exclude');
+const db = require('../src/utilities/db-util');
+const app = require('../src/app');
 
 const { expect } = chai;
 chai.use(chaiExclude);
-const db = new sqlite3.Database(':memory:');
-
-const app = require('../src/app')(db);
-const buildSchemas = require('../src/schemas');
 
 describe('API tests', () => {
-  before((done) => {
-    db.serialize((err) => {
-      if (err) {
-        return done(err);
-      }
-
-      buildSchemas(db);
-      done();
-    });
-  });
   afterEach((done) => {
     db.run('delete from Rides');
     db.run(`delete from sqlite_sequence where name='Rides'`);
