@@ -7,13 +7,13 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "npm run linter-fix && mocha tests",
-    "test-dev": "mocha tests",
-    "start": "node index.js",
+    "test": "npm run linter-fix && npm run test-dev",
+    "test-dev": "mocha tests/**/*test.js --recursive",
+    "start": "node index",
     "linter": "eslint .",
     "linter-fix": "eslint --fix .",
     "coverage": "nyc --check-coverage --branches=80 --lines=80 --functions=80 --statements=80 --reporter=html npm run test",
-    "coverage-dev": "nyc --check-coverage --branches=80 --lines=80 --functions=80 --statements=80 --reporter=html mocha tests"
+    "coverage-dev": "nyc --check-coverage --branches=80 --lines=80 --functions=80 --statements=80 npm run test"
   },
   "keywords": [
     "Xendit"
@@ -22,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "camelcase-keys": "^6.2.2",
     "express": "^4.16.4",
     "morgan": "^1.10.0",
     "snakecase-keys": "^3.2.0",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "chai-exclude": "^2.0.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -42,6 +44,7 @@
     "mocha": "^6.1.4",
     "nyc": "^15.0.1",
     "prettier": "^2.0.5",
+    "sinon": "^9.0.2",
     "supertest": "^4.0.2"
   },
   "husky": {
